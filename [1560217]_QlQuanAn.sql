@@ -7,158 +7,158 @@ GO
 --create table
 CREATE TABLE NHANVIEN
 (
-	id char(10),
-	username varchar(20),
-	pass varchar(50),
-	phone char(12),
-	chinhanh char(10),
-	status bit,
-	type int,
-	PRIMARY KEY (id)
+	MA char(10),
+	USERNAME varchar(20),
+	MATKHAU varchar(50),
+	DIENTHOAI char(12),
+	CHINHANH char(10),
+	TRANGTHAI bit,
+	LOAI int,
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE DANHMUCMONAN
 (
-	Id char(10),
-	Name nvarchar(50),
-	Status bit,
-	PRIMARY KEY (Id)
+	MA char(10),
+	TEN nvarchar(50),
+	TRANGTHAI bit,
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE MENUMONAN
 (
-	Id char(10),
-	Name nvarchar(50),
-	Status bit,
-	DanhMuc char(10),
-	PRIMARY KEY (Id)
+	MA char(10),
+	TEN nvarchar(50),
+	TRANGTHAI bit,
+	DANHMUC char(10),
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE DANHMUCMONANCHINHANH
 (
-	ChiNHanh char(10),
-	DanhMuc char(10),
-	Status bit
-	PRIMARY KEY(ChiNhanh, DanhMuc)
+	CHINHANH char(10),
+	DANHMUC char(10),
+	TRANGTHAI bit
+	PRIMARY KEY(CHINHANH, DANHMUC)
 )
 
 CREATE TABLE MENUCHINHANH
 (
-	ChiNHanh char(10),
-	MonAn char(10),
-	GiaTien int,
-	Status bit
-	PRIMARY KEY(ChiNhanh, MonAn)
+	CHINHANH char(10),
+	MONAN char(10),
+	GIATIEN int,
+	TRANGTHAI bit
+	PRIMARY KEY(CHINHANH, MONAN)
 )
 CREATE TABLE CHINHANH
 (
-	Id char(10),
-	Name nvarchar(50),
-	Address nvarchar(150),
-	Phone char(15),
-	City nvarchar(50),
-	SoBan int,
-	PRIMARY KEY (Id)
+	MA char(10),
+	TEN nvarchar(50),
+	DIACHI nvarchar(150),
+	DIENTHOAI char(15),
+	THANHPHO nvarchar(50),
+	SOBAN int,
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE CHIPHI
 (
-	Id char(10),
-	ChiNhanh char(10),
-	NoiDung nvarchar(100),
-	Ngay date,
-	ChiPhi int,
-	PRIMARY KEY (Id)
+	MA char(10),
+	CHINHANH char(10),
+	NOIDUNG nvarchar(100),
+	NGAY date,
+	CHIPHI int,
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE REPORT
 (
-	ChiNhanh char(10),
-	ChiPhi int,
-	DoanhThu int,
-	SoDonHangTaiQuan int,
-	SoDonHangGiaoDi int,
-	SoDonHangTongDai int,
-	SoDonHangOnline int,
-	Ngay Date,
-	PRIMARY KEY (Ngay, ChiNhanh)
+	CHINHANH char(10),
+	CHIPHI int,
+	DOANHTHU int,
+	SODONHANGTAIQUAN int,
+	SODONHANGGIAODI int,
+	SODONHANGTONGDAI int,
+	SODONHANGONLINE int,
+	NGAY Date,
+	PRIMARY KEY (NGAY, CHINHANH)
 )
 
 CREATE TABLE KHACHHANG
 (
-	Id char(10),
-	Name nvarchar(50),
-	Phone char(15),
-	SoLanMua int,
-	LanMuaGanNhat date,
-	PRIMARY KEY (Id)
+	MA char(10),
+	TEN nvarchar(50),
+	DIENTHOAI char(15),
+	SOLANMUA int,
+	LANMUAGANNHAT date,
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE BAN
 (
-	Id char(10),
-	Status bit,
-	ChiNhanh char(10)
-	PRIMARY KEY (id)
+	MA char(10),
+	TRANGTHAI bit,
+	CHINHANH char(10)
+	PRIMARY KEY (MA)
 )
 
 CREATE TABLE HOADON
 (
-	Id char(10),
-	KhachHang char(10),
-	ChiNhanh char(10),
-	NhanVien char(10),
-	Ban char(10),
-	Ngay date,
-	Type int, --mua ve, online,...
-	CacMonAn varchar(1000),
-	PRIMARY KEY (id)
+	MA char(10),
+	KHACHHANG char(10),
+	CHINHANH char(10),
+	NHANVIEN char(10),
+	BAN char(10),
+	NGAY date,
+	LOAI int, --mua ve, online,...
+	CACMONAN varchar(1000),
+	PRIMARY KEY (MA)
 )
 
 -- Add foreign key
 ALTER TABLE REPORT
 ADD CONSTRAINT FK_REPORT_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 --
 ALTER TABLE NhanVien
 ADD CONSTRAINT FK_NHANVIEN_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 
 ALTER TABLE ChiPhi
 ADD CONSTRAINT FK_ChiPhi_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 
 ALTER TABLE HoaDon
 ADD CONSTRAINT FK_HOADON_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 
 ALTER TABLE MenuChiNhanh
 ADD CONSTRAINT FK_MENUCHINHANH_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 
 ALTER TABLE DanhMucMonAnChiNhanh
 ADD CONSTRAINT FK_DANHMUCMONANCHINHANH_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 
 ALTER TABLE Ban
 ADD CONSTRAINT FK_Ban_CHINHANH
-FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(Id);
+FOREIGN KEY (ChiNhanh) REFERENCES ChiNhanh(MA);
 
 ALTER TABLE HoaDon
 ADD CONSTRAINT FK_HOADON_KHACHHANG
-FOREIGN KEY (KhachHang) REFERENCES KhachHang(Id);
+FOREIGN KEY (KhachHang) REFERENCES KhachHang(MA);
 
 ALTER TABLE HoaDon
 ADD CONSTRAINT FK_HOADON_NHANVIEN
-FOREIGN KEY (NhanVien) REFERENCES NhanVien(Id);
+FOREIGN KEY (NhanVien) REFERENCES NhanVien(MA);
 
 ALTER TABLE DanhMucMonAnChiNhanh
 ADD CONSTRAINT FK_DANHMUCMONANCHINHANH_DANHMUCMONAN
-FOREIGN KEY (DanhMuc) REFERENCES DanhMucMonAn(Id);
+FOREIGN KEY (DanhMuc) REFERENCES DanhMucMonAn(MA);
 
 ALTER TABLE MenuChiNhanh
 ADD CONSTRAINT FK_MENUCHINHANH_MENUMONAN
-FOREIGN KEY (MonAn) REFERENCES MenuMonAn(Id);
+FOREIGN KEY (MonAn) REFERENCES MenuMonAn(MA);
 
 
 
